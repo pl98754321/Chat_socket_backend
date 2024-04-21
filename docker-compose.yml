@@ -1,0 +1,10 @@
+services:
+  chat_backend:
+    image: chat_backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chat_backend
+    restart: unless-stopped
+    ports:
+      - 8000:8000
