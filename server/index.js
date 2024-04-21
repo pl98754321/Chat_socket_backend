@@ -22,21 +22,10 @@ io.on("connection", (socket) => {
   // User Create Group
   // User leave Group
   // User Message
-
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-    clientManager.removeClient(socket);
-  });
-
-  socket.on("message", (msg) => {
-    chatManager.handleMessage(socket, msg);
-  });
-
-  socket.on("createGroup", (groupName) => {
-    chatManager.createGroup(socket, groupName);
-  });
+  // User Direct Message
+  // User Group Message
 });
 
 server.listen(config.port, () => {
-  console.log(`Server running on port ${config.port}`);
+  console.log(`Server listening on port ${config.port}`);
 });
