@@ -1,3 +1,3 @@
 ```
-uvicorn server.main:app --reload
+uvicorn server.main:app --reload --port 8008
 ```
