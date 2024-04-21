@@ -28,6 +28,18 @@ class ConnectionManager:
             except Exception as e:
                 print(e)
 
+    async def send_current_user_to_all_in_room(
+        self, room_id: str, current_user_id: str, user_name: str
+    ):
+        for user_id in self.rooms[room_id]:
+            try:
+                if user_id != current_user_id:
+                    await self.send_personal_message(
+                        f"(User has enter {current_user_id} {user_name})", user_id
+                    )
+            except Exception as e:
+                print(e)
+
     async def send_personal_message(self, message: str, user_id: str):
         if user_id in self.active_connections:
             websocket = self.active_connections[user_id]
