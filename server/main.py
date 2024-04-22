@@ -1,3 +1,4 @@
+
 import secrets
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
@@ -59,3 +60,5 @@ async def websocket_endpoint(
         await conn_manager.send_room_message(
             f"(User left the chat {user_id})", room_name
         )
+
+

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, websockets
 from fastapi.responses import HTMLResponse
 
 from .userManager import UserManager
@@ -22,6 +22,6 @@ async def websocket_endpoint(websocket: WebSocket):
         while True:
             data = await websocket.receive_text()
             await user_manager.broadcast_message(f"User {user_id}: {data}")
-    except WebSocketDisconnect:
+    except websockets.ConnectionClosed#WebSocketDisconnect:
         user_manager.disconnect_user(user_id)
         await user_manager.broadcast_message(f"User {user_id} left the chat")
