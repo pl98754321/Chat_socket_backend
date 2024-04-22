@@ -1,4 +1,3 @@
-
 import secrets
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
@@ -45,9 +44,9 @@ async def websocket_endpoint(
     if user_id is None:
         user_id = connect_user_id
     if user_name is None:
-        user_name = user_name
-    num_user = len(conn_manager.rooms.get(room_name, []))
-    user_name = f"User{num_user+1}"
+        num_user = len(conn_manager.rooms.get(room_name, []))
+        user_name = f"User{num_user+1}"
+    # user_name = f"User{num_user+1}"
     await conn_manager.connect_user(websocket, connect_user_id, room_name)
     conn_manager.add_user_to_room(connect_user_id, room_name)
     await conn_manager.send_current_user_to_all_in_room(room_name, user_id, user_name)
@@ -60,5 +59,3 @@ async def websocket_endpoint(
         await conn_manager.send_room_message(
             f"(User left the chat {user_id})", room_name
         )
-
-
