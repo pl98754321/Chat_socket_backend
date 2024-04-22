@@ -1,6 +1,7 @@
 import secrets
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+import time
 
 from .userManager import ConnectionManager
 
@@ -54,6 +55,7 @@ async def websocket_endpoint(
         while True:
             data = await websocket.receive_json()
             await conn_manager.send_room_message(f"{data} ", room_name)
+            time.sleep(0.1)
     except WebSocketDisconnect:
         conn_manager.disconnect_user(connect_user_id)
         await conn_manager.send_room_message(
