@@ -1,3 +1,4 @@
+import re
 from typing import List
 
 from fastapi import WebSocket
@@ -40,9 +41,39 @@ class ConnectionManager:
             except Exception as e:
                 print(e)
 
+    def replace_vulgar_words(self, message: str):
+        # Check massage if it is Cure Vulgar words will be replace with ***
+        # https://www.sanook.com/campus/1407160/
+        list_vulgar_words = [
+            "อีตอแหล",
+            "ไอ้ระยำ",
+            "ไอ้เบื้อก",
+            "ไอ้ตัวแสบ",
+            "ไอ้หน้าโง่",
+            "อีร้อยควย",
+            "อีดอก",
+            "เฮงซวย",
+            "อีเหี้ย",
+            "อีสัตว์",
+            "อีควาย",
+            "ไอ้สัส",
+            "ไอ้เหี้ย",
+            "ไอ้ควาย",
+            "ผู้หญิงต่ำ",
+            "พระหน้าผี",
+            "พระหน้าเปรต",
+            "มารศาสนา",
+        ]
+
+        for word in list_vulgar_words:
+            message = message.replace(word, "***")
+
+        return message
+
     async def send_personal_message(self, message: str, user_id: str):
         if user_id in self.active_connections:
             websocket = self.active_connections[user_id]
+            message = self.replace_vulgar_words(message)
             await websocket.send_text(message)
 
     async def send_room_message(self, message: str, room_id: str):
